@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "D2AAC07D0554694100DB518D"
-               BuildableName = "libTiSquaredcalendar.a"
-               BlueprintName = "CalendarView"
-               ReferencedContainer = "container:CalendarView.xcodeproj">
+               BuildableName = "libTiSq.a"
+               BlueprintName = "TiSQ"
+               ReferencedContainer = "container:TiSQ.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>

@@ -7,12 +7,12 @@ apiversion: 2
 description: My module
 author: Benjamin Bahrenburg
 license: Specify your license
-copyright: Copyright (c) 2013 by Your Company
+copyright: Apache 2
 
 
 # these should not be edited
-name: CalendarView
-moduleid: ti.squaredcalendar
-guid: 2353b3f4-ecd8-42cc-b698-ffbba0de7ebe
+name: TiSQ
+moduleid: ti.sq
+guid: 496bcf20-7426-452d-b76f-8ed999d90785
 platform: iphone
-minsdk: 3.1.0.GA
+minsdk: 3.1.1.GA

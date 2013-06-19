@@ -1,25 +1,24 @@
 /**
- * benCoding.CalendarView
- * Copyright (c) 2010-2014 by Ben Bahrenburg. All Rights Reserved.
+ * Ti.SQ
+ * Copyright (c) 2009-2013 by Benjamin Bahrenburg All Rights Reserved.
  * Licensed under the terms of the Apache Public License
  * Please see the LICENSE included with this distribution for details.
  */
-
-#import "TiSquaredcalendarModule.h"
+#import "TiSqModule.h"
 #import "TiBase.h"
 #import "TiHost.h"
 #import "TiUtils.h"
 
-@implementation TiSquaredcalendarModule
+@implementation TiSqModule
 
 #pragma mark Internal
 
-NSString *const _moduleId = @"ti.squaredcalendar";
+NSString *const _moduleId = @"ti.sq";
 
 // this is generated for your module, please do not change it
 -(id)moduleGUID
 {
-	return @"2353b3f4-ecd8-42cc-b698-ffbba0de7ebe";
+	return @"496bcf20-7426-452d-b76f-8ed999d90785";
 }
 
 // this is generated for your module, please do not change it
@@ -49,11 +48,6 @@ NSString *const _moduleId = @"ti.squaredcalendar";
 
 #pragma mark Cleanup 
 
--(void)dealloc
-{
-	// release any resources that have been retained by the module
-	[super dealloc];
-}
 
 #pragma mark Internal Memory Management
 
@@ -63,6 +57,7 @@ NSString *const _moduleId = @"ti.squaredcalendar";
 	// reloaded once memory is available - such as caches
 	[super didReceiveMemoryWarning:notification];
 }
+
 +(NSString*)getPathToModuleAsset:(NSString*) fileName
 {
 	// The module assets are copied to the application bundle into the folder pattern

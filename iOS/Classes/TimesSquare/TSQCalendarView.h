@@ -57,7 +57,7 @@
  The delegate must adopt the `TSQCalendarViewDelegate` protocol.
  The `TSQCalendarView` class, which does not retain the delegate, invokes each protocol method the delegate implements.
  */
-@property (nonatomic, retain) id<TSQCalendarViewDelegate> delegate;
+@property (nonatomic, weak) id<TSQCalendarViewDelegate> delegate;
 
 /** Whether to pin the header to the top of the view.
  

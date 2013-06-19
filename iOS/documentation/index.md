@@ -1,16 +1,16 @@
-# CalendarView Module
+# TiSQ Module
 
 ## Description
 
 TODO: Enter your module description here
 
-## Accessing the CalendarView Module
+## Accessing the TiSQ Module
 
 To access this module from JavaScript, you would do the following:
 
-	var CalendarView = require("ti.squaredcalendar");
+	var TiSQ = require("ti.sq");
 
-The CalendarView variable is a reference to the Module object.	
+The TiSQ variable is a reference to the Module object.	
 
 ## Reference
 

@@ -13,16 +13,16 @@ win.add(label);
 win.open();
 
 // TODO: write your module tests here
-var CalendarView = require('ti.squaredcalendar');
-Ti.API.info("module is => " + CalendarView);
+var TiSQ = require('ti.sq');
+Ti.API.info("module is => " + TiSQ);
 
-label.text = CalendarView.example();
+label.text = TiSQ.example();
 
-Ti.API.info("module exampleProp is => " + CalendarView.exampleProp);
-CalendarView.exampleProp = "This is a test value";
+Ti.API.info("module exampleProp is => " + TiSQ.exampleProp);
+TiSQ.exampleProp = "This is a test value";
 
 if (Ti.Platform.name == "android") {
-	var proxy = CalendarView.createExample({
+	var proxy = TiSQ.createExample({
 		message: "Creating an example Proxy",
 		backgroundColor: "red",
 		width: 100,

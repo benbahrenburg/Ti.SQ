@@ -8,7 +8,7 @@
 //  which Square, Inc. licenses this file to you.
 
 #import "TSQTACalendarRowCell.h"
-#import "TiSquaredcalendarModule.h"
+#import "TiSqModule.h"
 @implementation TSQTACalendarRowCell
 
 
@@ -22,7 +22,7 @@
 
 - (UIImage *)todayBackgroundImage;
 {
-    NSString *imagePath = [TiSquaredcalendarModule getPathToModuleAsset:@"CalendarTodaysDate.png"];
+    NSString *imagePath = [TiSqModule getPathToModuleAsset:@"CalendarTodaysDate.png"];
 	UIImage *image = [[UIImage imageWithContentsOfFile:imagePath]  stretchableImageWithLeftCapWidth:4 topCapHeight:4];
 	if (image == nil) {
 		return nil;
@@ -33,7 +33,7 @@
 
 - (UIImage *)selectedBackgroundImage;
 {
-    NSString *imagePath = [TiSquaredcalendarModule getPathToModuleAsset:@"CalendarSelectedDate.png"];
+    NSString *imagePath = [TiSqModule getPathToModuleAsset:@"CalendarSelectedDate.png"];
 	UIImage *image = [[UIImage imageWithContentsOfFile:imagePath]  stretchableImageWithLeftCapWidth:4 topCapHeight:4];
 	if (image == nil) {
 		return nil;
@@ -44,7 +44,7 @@
 
 - (UIImage *)notThisMonthBackgroundImage;
 {
-    NSString *imagePath = [TiSquaredcalendarModule getPathToModuleAsset:@"CalendarPreviousMonth.png"];
+    NSString *imagePath = [TiSqModule getPathToModuleAsset:@"CalendarPreviousMonth.png"];
 	UIImage *image = [[UIImage imageWithContentsOfFile:imagePath]  stretchableImageWithLeftCapWidth:0 topCapHeight:0];
 	if (image == nil) {
 		return nil;
@@ -55,7 +55,7 @@
 
 - (UIImage *)backgroundImage;
 {
-    NSString *imagePath = [TiSquaredcalendarModule getPathToModuleAsset:
+    NSString *imagePath = [TiSqModule getPathToModuleAsset:
                            [NSString stringWithFormat:@"CalendarRow%@.png", self.bottomRow ? @"Bottom" : @""]];
 	UIImage *image = [UIImage imageWithContentsOfFile:imagePath];
 	if (image == nil) {

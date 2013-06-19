@@ -59,7 +59,6 @@
 {
     _tableView.dataSource = nil;
     _tableView.delegate = nil;
-    [super dealloc];
 }
 
 - (NSCalendar *)calendar;

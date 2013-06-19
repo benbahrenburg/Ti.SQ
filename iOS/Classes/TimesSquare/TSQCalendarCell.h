@@ -43,7 +43,7 @@
  
  This is a weak reference.
  */
-@property (nonatomic, retain) TSQCalendarView *calendarView;
+@property (nonatomic, weak) TSQCalendarView *calendarView;
 
 /** @name Display Properties */
 

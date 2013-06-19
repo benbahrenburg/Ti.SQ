@@ -17,7 +17,7 @@
                BlueprintIdentifier = "24416B8111C4CA220047AFDD"
                BuildableName = "Build &amp; Test"
                BlueprintName = "Build &amp; Test"
-               ReferencedContainer = "container:CalendarView.xcodeproj">
+               ReferencedContainer = "container:TiSQ.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>

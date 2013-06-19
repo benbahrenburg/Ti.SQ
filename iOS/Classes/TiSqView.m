@@ -1,11 +1,11 @@
 /**
- * benCoding.CalendarView
- * Copyright (c) 2010-2014 by Ben Bahrenburg. All Rights Reserved.
+ * Ti.SQ
+ * Copyright (c) 2009-2013 by Benjamin Bahrenburg All Rights Reserved.
  * Licensed under the terms of the Apache Public License
  * Please see the LICENSE included with this distribution for details.
  */
 
-#import "TiSquaredcalendarCalendarView.h"
+#import "TiSqView.h"
 #import "TiUtils.h"
 #import "TSQTACalendarRowCell.h"
 
@@ -15,7 +15,7 @@
 
 @end
 
-@implementation TiSquaredcalendarCalendarView
+@implementation TiSqView
 
 -(TSQCalendarView*)square
 {
@@ -23,7 +23,7 @@
 	// initialize it.
 	if (square == nil) {
 		NSLog(@"[CALENDARVIEW] square");
-
+        
         square = [[TSQCalendarView alloc] initWithFrame:[self frame]];
         square.rowCellClass = [TSQTACalendarRowCell class];
         square.firstDate = [NSDate dateWithTimeIntervalSinceNow:-60 * 60 * 24 * 365 * 1];
@@ -80,19 +80,17 @@
     NSInteger month = [TiUtils intValue:@"month" properties:args def:1];
     NSInteger day = [TiUtils intValue:@"day" properties:args def:1];
     NSInteger year = [TiUtils intValue:@"year" properties:args def:2000];
-        
+    
     NSDateComponents *comps = [[NSDateComponents alloc] init];
     [comps setMonth:month];
     [comps setDay:day];
     [comps setYear:year];
-        
+    
     NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
     [[self square] setSelectedDate:[gregorian dateFromComponents:comps]];
     
-    [comps release];
-    [gregorian release];
 }
-     
+
 -(void)setFirstDate_:(id)args
 {
     ENSURE_SINGLE_ARG(args,NSDictionary);
@@ -108,8 +106,6 @@
 	NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
     [[self square] setFirstDate:[gregorian dateFromComponents:comps]];
 	
-    [comps release];
-	[gregorian release];
 }
 
 
@@ -129,13 +125,11 @@
     
 	[[self square] setLastDate:[gregorian dateFromComponents:comps]];
 	
-    [comps release];
-	[gregorian release];
 }
 
 - (BOOL)calendarView:(TSQCalendarView *)calendarView shouldSelectDate:(NSDate *)date
 {
-
+    
 }
 - (void)calendarView:(TSQCalendarView *)calendarView didSelectDate:(NSDate *)date
 {
