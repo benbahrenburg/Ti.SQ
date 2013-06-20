@@ -9,7 +9,6 @@
 @interface TiSqView : TiUIView<TSQCalendarViewDelegate> {
 @private
 	TSQCalendarView *square;
-    BOOL autoFocus;
 }
 -(void) render;
 @end

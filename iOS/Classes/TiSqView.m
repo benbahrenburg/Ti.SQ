@@ -69,8 +69,10 @@
 
 -(void) render
 {
-    //This method is used to force render
-    BOOL test = [self square].pagingEnabled;
+    if([self square] ==nil)
+    {
+        NSLog(@"[DEBUG] render called to initialize calendar");
+    }
 }
 -(void)frameSizeChanged:(CGRect)frame bounds:(CGRect)bounds
 {
@@ -85,6 +87,8 @@
         square.contentInset = UIEdgeInsetsMake(0.0f, onePixel, 0.0f, onePixel);
         //Adjust size to match new container width
 		[TiUtils setView:square positionRect:bounds];
+        
+        //If no date is setup, add today as the default
         if([[self square] selectedDate] == nil)
         {
             [(TSQCalendarView *)self.square scrollToDate:[NSDate date] animated:NO];
@@ -150,8 +154,8 @@
 	[comps setDay:day];
 	[comps setYear:year];
     
-	NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
-    [[self square] setFirstDate:[gregorian dateFromComponents:comps]];
+	NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+    [[self square] setFirstDate:[calendar dateFromComponents:comps]];
 	
 }
 
@@ -167,9 +171,9 @@
 	[comps setDay:day];
 	[comps setYear:year];
     
-	NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+	NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
     
-	[[self square] setLastDate:[gregorian dateFromComponents:comps]];
+	[[self square] setLastDate:[calendar dateFromComponents:comps]];
 	
 }
 
