@@ -10,13 +10,23 @@
 #import "TiSqView.h"
 @implementation TiSqViewProxy
 
--(void)viewDidAttach
+-(NSArray *)keySequence
 {
-	ENSURE_UI_THREAD_0_ARGS;
-	TiSqView * ourView = (TiSqView *)[self view];
-    [ourView showToday];
-	[super viewDidAttach];
+    return [NSArray arrayWithObjects:
+            @"min",
+            @"max",
+            @"value",
+            nil];
 }
 
+-(void)viewDidAttach
+{
+    if ([NSThread isMainThread]) {
+        TiSqView * ourView = (TiSqView *)[self view];
+        [ourView render];
+    }
+    
+	[super viewDidAttach];
+}
 
 @end

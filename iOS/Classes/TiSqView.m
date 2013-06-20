@@ -22,30 +22,78 @@
 	// Return the square view. If this is the first time then allocate and
 	// initialize it.
 	if (square == nil) {
-		NSLog(@"[CALENDARVIEW] square");
         
-        square = [[TSQCalendarView alloc] initWithFrame:[self frame]];
+        square = [[TSQCalendarView alloc] init];
         square.rowCellClass = [TSQTACalendarRowCell class];
-        square.firstDate = [NSDate dateWithTimeIntervalSinceNow:-60 * 60 * 24 * 365 * 1];
-        square.lastDate = [NSDate dateWithTimeIntervalSinceNow:60 * 60 * 24 * 365 * 5];
+        NSDate* now = [NSDate date];
+        
+        NSCalendar *startCalendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+        NSDateComponents *startComp = [startCalendar components:(NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit) fromDate:now];
+        [startComp setDay:1];
+        [startComp setMonth:1];
+
+        NSDate *firstDayOfYear = [startCalendar dateFromComponents:startComp];
+        
+        //Set default start date
+        square.firstDate = firstDayOfYear;
+
+        NSCalendar *endCalendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+        NSDateComponents *endComp = [startCalendar components:(NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit) fromDate:now];
+        [endComp setDay:31];
+        [endComp setMonth:12];
+        
+        NSDate *lastDayOfYear = [endCalendar dateFromComponents:endComp];
+        
+        //Set default end date
+        square.lastDate = lastDayOfYear;
+                
+        //Set default backgroundColor
         square.backgroundColor = [UIColor colorWithRed:0.84f green:0.85f blue:0.86f alpha:1.0f];
+        
+        //Enable paging by default
         square.pagingEnabled = YES;
+        
+        //Add an offset
         CGFloat onePixel = 1.0f / [UIScreen mainScreen].scale;
         square.contentInset = UIEdgeInsetsMake(0.0f, onePixel, 0.0f, onePixel);
+        
+        square.selectedDate =[NSDate date];
         square.delegate = self;
         
-		[self addSubview:square];
-        
+        //Add to Ti master view
+        [self addSubview:square];
 	}
     
 	return square;
 }
 
--(void) showToday
+-(void) render
 {
-    // Set the calendar view to show today date on start
-    [square scrollToDate:[NSDate date] animated:NO];
+    //This method is used to force render
+    BOOL test = [self square].pagingEnabled;
 }
+-(void)frameSizeChanged:(CGRect)frame bounds:(CGRect)bounds
+{
+	// You must implement this method for your view to be sized correctly.
+	// This method is called each time the frame / bounds / center changes
+	// within Titanium.
+    
+	if (square != nil) {
+        
+        //Add an offset
+        CGFloat onePixel = 1.0f / [UIScreen mainScreen].scale;
+        square.contentInset = UIEdgeInsetsMake(0.0f, onePixel, 0.0f, onePixel);
+        //Adjust size to match new container width
+		[TiUtils setView:square positionRect:bounds];
+        if([[self square] selectedDate] == nil)
+        {
+            [(TSQCalendarView *)self.square scrollToDate:[NSDate date] animated:NO];
+        }else{
+            [(TSQCalendarView *)self.square scrollToDate:[[self square] selectedDate] animated:NO];
+        }
+	}
+}
+
 -(BOOL)hasTouchableListener
 {
 	// since this guy only works with touch events, we always want them
@@ -57,8 +105,6 @@
 
 -(void)setBackgroundColor_:(id)value
 {
-    NSLog(@"[CALENDARVIEW] Property Set: setBackgroundColor_");
-    
 	// Use the TiUtils methods to get the values from the arguments
 	TiColor *newColor = [TiUtils colorValue:value];
 	UIColor *clr = [newColor _color];
@@ -66,15 +112,14 @@
 	sq.backgroundColor = clr;
 }
 -(void)setPagingEnabled_:(id)value
-{
-    
+{    
 	[[self square] setPagingEnabled:[TiUtils boolValue:value]];
 }
--(NSDate*) getSelectedDate
+-(NSDate*) getValue
 {
     return [[self square] selectedDate];
 }
--(void)setSelectedDate_:(id)args
+-(void)setValue_:(id)args
 {
     ENSURE_SINGLE_ARG(args,NSDictionary);
     NSInteger month = [TiUtils intValue:@"month" properties:args def:1];
@@ -89,9 +134,11 @@
     NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
     [[self square] setSelectedDate:[gregorian dateFromComponents:comps]];
     
+    [(TSQCalendarView *)self.square scrollToDate:[gregorian dateFromComponents:comps] animated:NO];
+    
 }
 
--(void)setFirstDate_:(id)args
+-(void)setMin_:(id)args
 {
     ENSURE_SINGLE_ARG(args,NSDictionary);
     NSInteger month = [TiUtils intValue:@"month" properties:args def:1];
@@ -108,8 +155,7 @@
 	
 }
 
-
--(void)setLastDate_:(id)args
+-(void)setMax_:(id)args
 {
     ENSURE_SINGLE_ARG(args,NSDictionary);
     NSInteger month = [TiUtils intValue:@"month" properties:args def:1];
@@ -127,12 +173,25 @@
 	
 }
 
-- (BOOL)calendarView:(TSQCalendarView *)calendarView shouldSelectDate:(NSDate *)date
+- (void)scroll;
 {
+    static BOOL atTop = YES;
+    TSQCalendarView *calendarView = (TSQCalendarView *)self.square;
+    UITableView *tableView = calendarView.tableView;
     
+    [tableView setContentOffset:CGPointMake(0.f, atTop ? 10000.f : 0.f) animated:YES];
+    atTop = !atTop;
 }
+
 - (void)calendarView:(TSQCalendarView *)calendarView didSelectDate:(NSDate *)date
 {
-    //Add listener callout
+    BOOL reproxying = [self.proxy inReproxy];
+    if ((reproxying == NO) && configurationSet && [self.proxy _hasListeners:@"dateChanged"]) {
+            NSDictionary *event = [NSDictionary dictionaryWithObjectsAndKeys:
+                                   date,@"value",
+                                   nil
+                                   ];
+            [self.proxy fireEvent:@"dateChanged" withObject:event];
+    }
 }
 @end

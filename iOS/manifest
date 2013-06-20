@@ -4,10 +4,10 @@
 #
 version: 0.1
 apiversion: 2
-description: My module
+description: Ti.SQ is a Titanium wrapper for the TimeSquare date picker
 author: Benjamin Bahrenburg
-license: Specify your license
-copyright: Apache 2
+license: Apache 2
+copyright: copyright 2013 Benjamin Bahrenburg
 
 
 # these should not be edited
