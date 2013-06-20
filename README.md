@@ -1,6 +1,6 @@
-<h1>Ti.SquaredCalendar</h1>
+<h1>Ti.SQ</h1>
 
-The SquaredCalendar project allows you to use [Square's](http://square.github.io) open source TimeSquare calendar picker in your Titanium app.
+The TiSQ project allows you to use [Square's](http://square.github.io) open source TimeSquare calendar picker in your Titanium app.
 
 <h2>Coming Soon...</h2>
 Examples on how to use the CalendarView and associated code is coming soon.... please watch the project for updates.
