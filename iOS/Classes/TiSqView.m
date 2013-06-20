@@ -98,6 +98,18 @@
 	}
 }
 
+-(NSDictionary*) formatValueResults:(NSDate*) date
+{
+    NSDateComponents *components = [[NSCalendar currentCalendar] components:NSDayCalendarUnit | NSMonthCalendarUnit | NSYearCalendarUnit fromDate:date];
+
+    NSDictionary *valueResult = [NSDictionary dictionaryWithObjectsAndKeys:
+                                 [NSNumber numberWithInteger:[components month]],@"month",
+                                 [NSNumber numberWithInteger:[components day]],@"day",
+                                 [NSNumber numberWithInteger:[components year]],@"year",
+                                 nil
+                                 ];
+    return valueResult;
+}
 -(BOOL)hasTouchableListener
 {
 	// since this guy only works with touch events, we always want them
@@ -119,10 +131,7 @@
 {    
 	[[self square] setPagingEnabled:[TiUtils boolValue:value]];
 }
--(NSDate*) getValue
-{
-    return [[self square] selectedDate];
-}
+
 -(void)setValue_:(id)args
 {
     ENSURE_SINGLE_ARG(args,NSDictionary);
@@ -189,10 +198,14 @@
 
 - (void)calendarView:(TSQCalendarView *)calendarView didSelectDate:(NSDate *)date
 {
+    [[self proxy] replaceValue:[self formatValueResults:[[self square] selectedDate]] forKey:@"value" notification:NO];
+    [[self proxy] replaceValue:[[self square] selectedDate] forKey:@"dateValue" notification:NO];
+    
     BOOL reproxying = [self.proxy inReproxy];
     if ((reproxying == NO) && configurationSet && [self.proxy _hasListeners:@"dateChanged"]) {
             NSDictionary *event = [NSDictionary dictionaryWithObjectsAndKeys:
-                                   date,@"value",
+                                   [self formatValueResults:date],@"value",
+                                   date,@"dateValue",
                                    nil
                                    ];
             [self.proxy fireEvent:@"dateChanged" withObject:event];

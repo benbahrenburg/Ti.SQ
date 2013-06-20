@@ -22,7 +22,9 @@ var calendarView = sq.createView({
 });
 win.add(calendarView);		
 calendarView.addEventListener('dateChanged',function(d){
-	Ti.API.info(JSON.stringify(d));
+	Ti.API.info(JSON.stringify(d.dateValue));
+	Ti.API.info(JSON.stringify(d.value));
+	Ti.API.info(JSON.stringify(calendarView.value));
 });
 	
 win.open();

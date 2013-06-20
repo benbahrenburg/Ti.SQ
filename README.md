@@ -64,6 +64,13 @@ Enabled by default, this property determines if the Ti.SQ calendar view allows f
 
 The color of the calendar view month headings
 
+
+<b>Additional Properties</b>
+
+<b>dateValue</b> : Date
+
+Once the Calendar View has been created and added to your Ti.UI.Window, the dateValue property can be used to obtain a JavaScript date object with the selected date of the Calendar View.
+
 <b>Example</b>
 <pre><code>
 //Require the square module into your project
@@ -94,10 +101,32 @@ var calendarView = square.createView({
 
 This event is called when a date is selected by the user.
 
+<b>Callback Property Values</b>
+
+<b>dateValue</b> : Date
+
+A JavaScript date object with the selected date of the Calendar View
+
+<b>value</b> : Dictionary
+
+A dictionary object with the day, month, and year of the selected date of the Calendar View. 
+
+For exampe:
+
+<pre><code>
+{
+	month:4,day:15,year:2013
+}
+</code></pre>
+
+
 <b>Example</b>
 <pre><code>
 calendarView.addEventListener('dateChanged',function(d){
-  Ti.API.info(JSON.stringify(d));
+	Ti.API.info(JSON.stringify(d));
+	Ti.API.info(JSON.stringify(d.dateValue));
+	Ti.API.info(JSON.stringify(d.value));
+	Ti.API.info(JSON.stringify(calendarView.value));
 });
 </code></pre>
 
