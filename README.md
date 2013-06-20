@@ -31,9 +31,86 @@ Import the project into Eclipse:
 <h2>Setup</h2>
 
 * Download the latest release from the releases folder ( or you can build it yourself )
-* Install the bencoding.sms module. If you need help here is a "How To" [guide](https://wiki.appcelerator.org/display/guides/Configuring+Apps+to+Use+Modules). 
+* Install the ti.sq module. If you need help here is a "How To" [guide](https://wiki.appcelerator.org/display/guides/Configuring+Apps+to+Use+Modules). 
 * You can now use the module via the commonJS require method, example shown below.
 
+<h2>Importing the module using require</h2>
+<pre><code>
+var square = require('ti.sq');
+</code></pre>
+
+<h2>Creating the View Object</h2>
+The Ti.SQ view supports a majority of the standard [Ti.UI.View](http://docs.appcelerator.com/titanium/latest/#!/api/Titanium.UI.View) properties.  The below listed properties are specific to the Ti.SQ calendar view.
+
+<b>Parameters</b>
+
+<b>value</b> : Dictionary
+
+The selection value on the Ti.SQ calendar View
+
+<b>min</b> : Dictionary
+
+The minimum date that will be shown and allowed to be selected on the Ti.SQ calendar view. 
+
+<b>max</b> : Dictionary
+
+The maximum date that will be shown and allowed to be selected on the Ti.SQ calendar view. 
+
+<b>PagingEnabled</b> : Boolean
+
+Enabled by default, this property determines if the Ti.SQ calendar view allows for scrolling
+
+<b>BackgroundColor</b> : String/Color
+
+The color of the calendar view month headings
+
+<b>Example</b>
+<pre><code>
+//Require the square module into your project
+var square = require('ti.sq');
+
+var calendarView = square.createView({
+  height:Ti.UI.FILL,
+	width:Ti.UI.FILL,
+	pagingEnabled:true,
+	value:{
+		month:4,day:15,year:2013
+	},		
+	min:{
+		month:2,day:15,year:2013
+	},
+	max:{
+		month:10,day:15,year:2013
+	}
+});
+
+
+</code></pre>
+
+
+<h2>Events</h2>
+
+<b>dateChanged</b>
+
+This event is called when a date is selected by the user.
+
+<b>Example</b>
+<pre><code>
+calendarView.addEventListener('dateChanged',function(d){
+  Ti.API.info(JSON.stringify(d));
+});
+</code></pre>
+
+<h2>Learn More</h2>
+
+<h3>Examples</h3>
+Please check the module's example folder or 
+
+
+* [iOS](https://github.com/benbahrenburg/Ti.SQ/tree/master/iOS/example) 
+* [Android](https://github.com/benbahrenburg/Ti.SQ/tree/master/Android/Module/example)
+
+for samples on how to use this project.
 
 <h3>Twitter</h3>
 
