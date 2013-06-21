@@ -8,6 +8,5 @@
 
 @interface TiSqModule : TiModule {
 }
-
-+(NSString*)getPathToModuleAsset:(NSString*) fileName;
++(NSString*) findModuleId;
 @end

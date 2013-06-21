@@ -13,7 +13,6 @@
 
 #pragma mark Internal
 
-NSString *const _moduleId = @"ti.sq";
 
 // this is generated for your module, please do not change it
 -(id)moduleGUID
@@ -21,10 +20,14 @@ NSString *const _moduleId = @"ti.sq";
 	return @"496bcf20-7426-452d-b76f-8ed999d90785";
 }
 
++(NSString*) findModuleId
+{
+    return [[TiSqModule alloc] init].moduleId;
+}
 // this is generated for your module, please do not change it
 -(NSString*)moduleId
 {
-	return _moduleId;
+	return @"ti.sq";
 }
 
 #pragma mark Lifecycle
@@ -58,15 +61,4 @@ NSString *const _moduleId = @"ti.sq";
 	[super didReceiveMemoryWarning:notification];
 }
 
-+(NSString*)getPathToModuleAsset:(NSString*) fileName
-{
-	// The module assets are copied to the application bundle into the folder pattern
-	// "module/<moduleid>". One way to access these assets is to build a path from the
-	// mainBundle of the application.
-    
-	NSString *pathComponent = [NSString stringWithFormat:@"modules/%@/%@", _moduleId, fileName];
-	NSString *result = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:pathComponent];
-    
-	return result;
-}
 @end

@@ -12,6 +12,18 @@
 @implementation TSQTACalendarRowCell
 
 
+-(NSString*)getPathToModuleAsset:(NSString*) fileName
+{
+	// The module assets are copied to the application bundle into the folder pattern
+	// "module/<moduleid>". One way to access these assets is to build a path from the
+	// mainBundle of the application.
+    
+	NSString *pathComponent = [NSString stringWithFormat:@"modules/%@/%@", [TiSqModule findModuleId], fileName];
+	NSString *result = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:pathComponent];
+    
+	return result;
+}
+
 - (void)layoutViewsForColumnAtIndex:(NSUInteger)index inRect:(CGRect)rect;
 {
     // Move down for the row at the top
@@ -22,47 +34,43 @@
 
 - (UIImage *)todayBackgroundImage;
 {
-    NSString *imagePath = [TiSqModule getPathToModuleAsset:@"CalendarTodaysDate.png"];
+    NSString *imagePath = [self getPathToModuleAsset:@"CalendarTodaysDate.png"];
 	UIImage *image = [[UIImage imageWithContentsOfFile:imagePath]  stretchableImageWithLeftCapWidth:4 topCapHeight:4];
 	if (image == nil) {
 		return nil;
 	}
     return image;
-    //return [[UIImage imageNamed:@"CalendarTodaysDate.png"] stretchableImageWithLeftCapWidth:4 topCapHeight:4];
 }
 
 - (UIImage *)selectedBackgroundImage;
 {
-    NSString *imagePath = [TiSqModule getPathToModuleAsset:@"CalendarSelectedDate.png"];
+    NSString *imagePath = [self getPathToModuleAsset:@"CalendarSelectedDate.png"];
 	UIImage *image = [[UIImage imageWithContentsOfFile:imagePath]  stretchableImageWithLeftCapWidth:4 topCapHeight:4];
 	if (image == nil) {
 		return nil;
 	}
     return image;
-    //return [[UIImage imageNamed:@"CalendarSelectedDate.png"] stretchableImageWithLeftCapWidth:4 topCapHeight:4];
 }
 
 - (UIImage *)notThisMonthBackgroundImage;
 {
-    NSString *imagePath = [TiSqModule getPathToModuleAsset:@"CalendarPreviousMonth.png"];
+    NSString *imagePath = [self getPathToModuleAsset:@"CalendarPreviousMonth.png"];
 	UIImage *image = [[UIImage imageWithContentsOfFile:imagePath]  stretchableImageWithLeftCapWidth:0 topCapHeight:0];
 	if (image == nil) {
 		return nil;
 	}
     return image;
-    //return [[UIImage imageNamed:@"CalendarPreviousMonth.png"] stretchableImageWithLeftCapWidth:0 topCapHeight:0];
 }
 
 - (UIImage *)backgroundImage;
 {
-    NSString *imagePath = [TiSqModule getPathToModuleAsset:
+    NSString *imagePath = [self getPathToModuleAsset:
                            [NSString stringWithFormat:@"CalendarRow%@.png", self.bottomRow ? @"Bottom" : @""]];
 	UIImage *image = [UIImage imageWithContentsOfFile:imagePath];
 	if (image == nil) {
 		return nil;
 	}
     return image;
-    //return [UIImage imageNamed:[NSString stringWithFormat:@"CalendarRow%@.png", self.bottomRow ? @"Bottom" : @""]];
 }
 
 @end
