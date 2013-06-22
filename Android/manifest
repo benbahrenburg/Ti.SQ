@@ -5,7 +5,7 @@
 version: 0.1
 apiversion: 2
 description: My module
-author: Benjamin Bahrenburg
+author: Your Name
 license: Specify your license
 copyright: Copyright (c) 2013 by Your Company
 
@@ -13,6 +13,6 @@ copyright: Copyright (c) 2013 by Your Company
 # these should not be edited
 name: tisq
 moduleid: ti.sq
-guid: 4d235089-2d0e-4248-abd8-87690b65bd70
+guid: 978153b4-fe2a-4486-9271-9de4764680bc
 platform: android
 minsdk: 3.1.1.GA

@@ -18,9 +18,10 @@ import org.appcelerator.kroll.common.Log;
 public class TisqModule extends KrollModule
 {
 
+	public static final boolean DEBUG = true;
 	// Standard Debugging variables
 	private static final String TAG = "TisqModule";
-	public static boolean DEBUG = true;
+
 	// You can define constants with @Kroll.constant, for example:
 	// @Kroll.constant public static final String EXTERNAL_NAME = value;
 	
@@ -36,17 +37,26 @@ public class TisqModule extends KrollModule
 		// put module init code that needs to run when the application is created
 	}
 
+	// Methods
+	@Kroll.method
+	public String example()
+	{
+		Log.d(TAG, "example called");
+		return "hello world";
+	}
+	
 	// Properties
 	@Kroll.getProperty
-	public boolean getDEBUG()
+	public String getExampleProp()
 	{
-		return DEBUG;
+		Log.d(TAG, "get example property");
+		return "hello world";
 	}
 	
 	
 	@Kroll.setProperty
-	public void setDEBUG(boolean value) {
-		DEBUG = value;
+	public void setExampleProp(String value) {
+		Log.d(TAG, "set example property: " + value);
 	}
 
 }
