@@ -1,39 +1,37 @@
-// This is a test harness for your module
-// You should do something interesting in this harness 
-// to test out the module and to provide instructions 
-// to users on how to use it by example.
-
+var sq = require('ti.sq');
+Ti.API.info("module is => " + sq);
 
 // open a single window
 var win = Ti.UI.createWindow({
-	backgroundColor:'white'
+	backgroundColor:'#fff'
 });
-var label = Ti.UI.createLabel();
-win.add(label);
+
+var calendarView = sq.createView({
+	height:Ti.UI.FILL,
+	top:0, bottom:40,
+	pagingEnabled:true,
+	value:{
+		month:6,day:10,year:2013
+	},		
+	min:{
+		month:2,day:15,year:2013
+	},
+	max:{
+		month:10,day:15,year:2013
+	}
+});
+win.add(calendarView);
+
+var button = Ti.UI.createButton({
+	title:'Click to get selected value',
+	height:35,
+	width:Ti.UI.FILL,
+	bottom:0
+});		
+win.add(button);
+
+button.addEventListener('click',function(d){
+	Ti.API.info(JSON.stringify(calendarView.value));
+})	
+	
 win.open();
-
-// TODO: write your module tests here
-var tisq = require('ti.sq');
-Ti.API.info("module is => " + tisq);
-
-label.text = tisq.example();
-
-Ti.API.info("module exampleProp is => " + tisq.exampleProp);
-tisq.exampleProp = "This is a test value";
-
-if (Ti.Platform.name == "android") {
-	var proxy = tisq.createExample({
-		message: "Creating an example Proxy",
-		backgroundColor: "red",
-		width: 100,
-		height: 100,
-		top: 100,
-		left: 150
-	});
-
-	proxy.printMessage("Hello world!");
-	proxy.message = "Hi world!.  It's me again.";
-	proxy.printMessage("Hello world!");
-	win.add(proxy);
-}
-

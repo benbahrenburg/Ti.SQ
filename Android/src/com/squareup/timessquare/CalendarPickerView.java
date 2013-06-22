@@ -81,6 +81,15 @@ public class CalendarPickerView extends ListView {
   private OnInvalidDateSelectedListener invalidDateListener =
       new DefaultOnInvalidDateSelectedListener();
 
+  public Calendar getMinCalendar()
+  {
+	  return minCal;
+  }
+
+  public Calendar getMaxCalendar()
+  {
+	  return maxCal;
+  }
   public CalendarPickerView(Context context, AttributeSet attrs) {
     super(context, attrs);
     adapter = new MonthAdapter();

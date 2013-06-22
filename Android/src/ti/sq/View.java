@@ -3,116 +3,123 @@ package ti.sq;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
-
 import org.appcelerator.titanium.view.TiUIView;
 import org.appcelerator.kroll.KrollDict;
-import org.appcelerator.kroll.KrollProxy;
 import org.appcelerator.titanium.proxy.TiViewProxy;
 import org.appcelerator.kroll.common.Log;
-import org.appcelerator.titanium.util.TiConvert;
 
 import com.squareup.timessquare.CalendarPickerView;
 import com.squareup.timessquare.CalendarPickerView.SelectionMode;
 
 public class View  extends TiUIView  
 {
-	// Standard Debugging variables
-		private static final String LCAT = "ModdevguideModule";
-
-		private static final String PROPERTY_COLOR = "color";
-
+		private static final String PROPERTY_VALUE = "value";
+		private static final String PROPERTY_MIN = "min";
+		private static final String PROPERTY_MAX = "max";		
 		public View(TiViewProxy proxy) 
 		{
 			super(proxy);
 
-			Log.d(LCAT, "[VIEW LIFECYCLE EVENT] view");
-
-			Calendar cal = Calendar.getInstance();
-			cal.set(Calendar.YEAR, 2013);
-			cal.set(Calendar.WEEK_OF_YEAR, 1);
-			cal.set(Calendar.DAY_OF_WEEK, 1);
-
-			Date start = cal.getTime();
-
-			//set date to last day of 2012
-			cal.set(Calendar.YEAR, 2013);
-			cal.set(Calendar.MONTH, 11); // 11 = december
-			cal.set(Calendar.DAY_OF_MONTH, 31); // new years eve
-
-			Date end = cal.getTime();
-
-			CalendarPickerView calendar = 
+			 Calendar start = Calendar.getInstance();
+			 // add year to current date
+			 start.add(Calendar.YEAR, -1);
+			 //Log.d(TisqModule.MODULE_SHORT_NAME,"[$DEBUG$] start date = " + start.getTime().toString());
+			 
+			 // add minus value
+			 Calendar end = Calendar.getInstance();
+			 end.add(Calendar.YEAR, 1);
+			 //Log.d(TisqModule.MODULE_SHORT_NAME,"[$DEBUG$] end date = " + end.getTime().toString());
+			
+			 //Create an instance of the CalendarPickerView
+			 CalendarPickerView calendar = 
 					new CalendarPickerView(proxy.getActivity(),null);
-			calendar.init(start, end) //
-		        .inMode(SelectionMode.SINGLE) //
+			 
+			 //Initialize the picker with our initial values
+			 calendar.init(start.getTime(), end.getTime()) 
+		        .inMode(SelectionMode.SINGLE) 
 		        .withSelectedDate(new Date());
 
 			// Set the view as the native view. You must set the native view
 			// for your view to be rendered correctly.
 			setNativeView(calendar);
 		}
-
-		// The view is automatically registered as a model listener when the view
-		// is realized by the view proxy. That means that the processProperties
-		// method will be called during creation and that propertiesChanged and 
-		// propertyChanged will be called when properties are changed on the proxy.
-
+		
 		@Override
 		public void processProperties(KrollDict props) 
 		{
 			super.processProperties(props);
 
-			Log.d(LCAT,"[VIEW LIFECYCLE EVENT] processProperties " + props);
-
 			// Check if the color is specified when the view was created
-			if (props.containsKey(PROPERTY_COLOR)) {
-				android.view.View square = (android.view.View)getNativeView();
-				square.setBackgroundColor(TiConvert.toColor(props, PROPERTY_COLOR));			
-				notifyOfColorChange(props.getString(PROPERTY_COLOR));
+			if ((props.containsKey(PROPERTY_VALUE)) &&
+					(props.containsKey(PROPERTY_MIN)) &&
+					(props.containsKey(PROPERTY_MIN))){	
+					
+				Date minValue  = convertHMtoDate(props.getKrollDict(PROPERTY_MIN));				
+				//Log.d(TisqModule.MODULE_SHORT_NAME,"[$DEBUG$] INIT minValue" + minValue);
+
+				Date maxValue  = convertHMtoDate(props.getKrollDict(PROPERTY_MAX));				
+				//Log.d(TisqModule.MODULE_SHORT_NAME,"[$DEBUG$] INIT maxValue" + maxValue);
+			
+				Date newValue  = convertHMtoDate(props.getKrollDict(PROPERTY_VALUE));				
+				//Log.d(TisqModule.MODULE_SHORT_NAME,"[$DEBUG$] INIT newValue" + newValue);
+	
+			      if (newValue.before(minValue) || newValue.after(maxValue)) {
+			    	  Log.d(TisqModule.MODULE_SHORT_NAME,"value:" +  newValue + " must be between min " 
+			    			  	+ minValue + " and max " + maxValue);
+			    	  Log.d(TisqModule.MODULE_SHORT_NAME,"min value used instead");
+			    	  newValue = minValue;
+			      }
+			      
+				CalendarPickerView square = (CalendarPickerView)getNativeView();
+				
+				square.init(minValue, maxValue) 
+							.inMode(SelectionMode.SINGLE) 
+							.withSelectedDate(newValue);
+				
 				square.invalidate();
 			}
 		}
-
-		@Override
-		public void propertyChanged(String key, Object oldValue, Object newValue, KrollProxy proxy)
+		private Date convertKDtoDate(KrollDict args)
 		{
-			// This method is called whenever a proxy property value is updated. Note that this 
-			// method is only called if the new value is different than the current value.
+			int month = args.optInt("month", 1);
+			int day = args.optInt("day", 1);
+			int year = args.optInt("year", 2000);
 
-			super.propertyChanged(key, oldValue, newValue, proxy);
-
-			Log.d(LCAT,"[VIEW LIFECYCLE EVENT] propertyChanged: " + key + ' ' + oldValue + ' ' + newValue);
+			Calendar calendar = Calendar.getInstance();
+			calendar.set(Calendar.YEAR, year);
+			// Note: Month is zero-based
+			calendar.set(Calendar.MONTH, month - 1);
+			calendar.set(Calendar.DAY_OF_MONTH, day);
+			return calendar.getTime();
+		}
+		@SuppressWarnings({ "rawtypes", "unchecked" })
+		private Date convertHMtoDate(HashMap hm)
+		{
+			KrollDict args = new KrollDict(hm);
+			return convertKDtoDate(args);
 		}
 
-		// Local helper method to fire the colorChange event
-		private void notifyOfColorChange(String newColor)
+		@SuppressWarnings({ "rawtypes" })
+		public void setValue(HashMap hm)
 		{
-			// The event listeners for a view are actually attached to the view proxy.
-			// You must reference 'proxy' to get the proxy for this view.
-
-			Log.d(LCAT,"[VIEW LIFECYCLE EVENT] notifyOfColorChange");
-
-			// It is a good idea to check if there are listeners for the event that
-			// is about to be fired. There could be zero or multiple listeners for the
-			// specified event.
-			if (proxy.hasListeners("colorChange")) {
-				HashMap<String, String> hm = new HashMap<String, String>();
-				hm.put("color", newColor);
-				proxy.fireEvent("colorChange", hm);
-			}
+			//Log.d(TisqModule.MODULE_SHORT_NAME,"[$DEBUG$] setValue called ");
+			Date newValue = convertHMtoDate(hm);
+			CalendarPickerView square = (CalendarPickerView)getNativeView();
+			square.selectDate(newValue);
 		}
-
-		// Setter method called by the proxy when the 'color' property is
-		// set. This could also be handled in the propertyChanged handler.
-		public void setColor(String color) 
-		{
-			Log.d(LCAT,"[VIEW LIFECYCLE EVENT] Property Set: setColor");
-
-			// Use the TiConvert method to get the values from the arguments
-			int newColor = TiConvert.toColor(color);
-			android.view.View square = (android.view.View)getNativeView();
-			square.setBackgroundColor(newColor);
-
-			notifyOfColorChange(color);
-		}	
+		
+		public Date getValue(){
+			CalendarPickerView square = (CalendarPickerView)getNativeView();
+			return square.getSelectedDate();
+		}		
+		
+		public Date getMin(){
+			CalendarPickerView square = (CalendarPickerView)getNativeView();
+			return square.getMinCalendar().getTime();
+		}
+		
+		public Date getMax(){
+			CalendarPickerView square = (CalendarPickerView)getNativeView();
+			return square.getMaxCalendar().getTime();
+		}		
 }

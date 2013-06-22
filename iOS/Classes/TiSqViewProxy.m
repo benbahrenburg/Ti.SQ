@@ -16,6 +16,7 @@
             @"value",            
             @"min",
             @"max",
+            @"pagingEnabled",
             nil];
 }
 
