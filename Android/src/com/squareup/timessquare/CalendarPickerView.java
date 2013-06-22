@@ -90,6 +90,7 @@ public class CalendarPickerView extends ListView {
   {
 	  return maxCal;
   }
+  
   public CalendarPickerView(Context context, AttributeSet attrs) {
     super(context, attrs);
     adapter = new MonthAdapter();
@@ -299,7 +300,7 @@ public class CalendarPickerView extends ListView {
   private class CellClickedListener implements MonthView.Listener {
     @Override public void handleClick(MonthCellDescriptor cell) {
       Date clickedDate = cell.getDate();
-
+      
       if (!betweenDates(clickedDate, minCal, maxCal) || !isDateSelectable(clickedDate)) {
         if (invalidDateListener != null) {
           invalidDateListener.onInvalidDateSelected(clickedDate);
@@ -308,7 +309,7 @@ public class CalendarPickerView extends ListView {
         boolean wasSelected = doSelectDate(clickedDate, cell);
 
         if (wasSelected && dateListener != null) {
-          dateListener.onDateSelected(clickedDate);
+          dateListener.onDateSelected(clickedDate);          
         }
       }
     }

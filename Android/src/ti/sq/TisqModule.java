@@ -15,7 +15,7 @@ import org.appcelerator.titanium.TiApplication;
 @Kroll.module(name="Tisq", id="ti.sq")
 public class TisqModule extends KrollModule
 {
-	public static boolean DEBUG = true;
+	public static boolean DEBUG = false;
 	public static final String MODULE_SHORT_NAME = "ti.sq";	
 
 	public TisqModule()

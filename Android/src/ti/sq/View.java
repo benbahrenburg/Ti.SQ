@@ -7,15 +7,16 @@ import org.appcelerator.titanium.view.TiUIView;
 import org.appcelerator.kroll.KrollDict;
 import org.appcelerator.titanium.proxy.TiViewProxy;
 import org.appcelerator.kroll.common.Log;
-
 import com.squareup.timessquare.CalendarPickerView;
+import com.squareup.timessquare.CalendarPickerView.OnDateSelectedListener;
 import com.squareup.timessquare.CalendarPickerView.SelectionMode;
 
 public class View  extends TiUIView  
 {
 		private static final String PROPERTY_VALUE = "value";
 		private static final String PROPERTY_MIN = "min";
-		private static final String PROPERTY_MAX = "max";		
+		private static final String PROPERTY_MAX = "max";
+		private onClickListener clickListener = null;
 		public View(TiViewProxy proxy) 
 		{
 			super(proxy);
@@ -78,6 +79,12 @@ public class View  extends TiUIView
 				
 				square.invalidate();
 			}
+			if(clickListener==null){
+				clickListener= new onClickListener();
+			}			
+			CalendarPickerView square = (CalendarPickerView)getNativeView();
+			square.setOnDateSelectedListener(clickListener);
+			
 		}
 		private Date convertKDtoDate(KrollDict args)
 		{
@@ -102,7 +109,6 @@ public class View  extends TiUIView
 		@SuppressWarnings({ "rawtypes" })
 		public void setValue(HashMap hm)
 		{
-			//Log.d(TisqModule.MODULE_SHORT_NAME,"[$DEBUG$] setValue called ");
 			Date newValue = convertHMtoDate(hm);
 			CalendarPickerView square = (CalendarPickerView)getNativeView();
 			square.selectDate(newValue);
@@ -121,5 +127,34 @@ public class View  extends TiUIView
 		public Date getMax(){
 			CalendarPickerView square = (CalendarPickerView)getNativeView();
 			return square.getMaxCalendar().getTime();
-		}		
+		}
+		
+		private HashMap<String, Object> formatEventDate(Date date)
+		{
+			Calendar cal = Util.DateToCalendar(date);
+			HashMap<String, Object> results = new HashMap<String, Object>();
+			results.put("year",cal.get(Calendar.YEAR));
+			results.put("month",(cal.get(Calendar.MONTH)-1));
+			results.put("day",cal.get(Calendar.DAY_OF_MONTH));
+			return results;
+		}
+		private void doFireClicked(Date date){
+			
+			if (proxy.hasListeners("dateChanged")) {						
+				//Build our event payload
+				HashMap<String, Object> event = new HashMap<String, Object>();
+				event.put("value",formatEventDate(date));
+				event.put("dateValue",date);
+				proxy.fireEvent("dateChanged", event);
+			}else{
+				Util.LogDebug("dateChange listener not found");
+			}
+		};
+		//Create a callback call so we can fire a listener
+		private class onClickListener implements OnDateSelectedListener {
+			@Override
+			public void onDateSelected(Date date) {
+				doFireClicked(date);				
+			}
+		}
 }
