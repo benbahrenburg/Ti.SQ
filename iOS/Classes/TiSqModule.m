@@ -61,4 +61,13 @@
 	[super didReceiveMemoryWarning:notification];
 }
 
+-(id)debug
+{
+	return NUMBOOL(NO);
+}
+
+-(void)setDebug:(id)value
+{
+}
+
 @end
