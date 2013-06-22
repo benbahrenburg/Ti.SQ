@@ -2,7 +2,8 @@
 
 The TiSQ project allows you to use [Square's](http://square.github.io) open source TimeSquare calendar picker in your Titanium app.
 
-[![ScreenShot](https://raw.github.com/benbahrenburg/Ti.SQ/master/Screenshots/ios_youtube.png)](http://www.youtube.com/watch?v=HKy7pTjiRx8)
+[![ScreenShot](https://raw.github.com/benbahrenburg/Ti.SQ/master/Screenshots/ios_youtube.png)](http://www.youtube.com/watch?v=HKy7pTjiRx8)[![ScreenShot](https://raw.github.com/benbahrenburg/Ti.SQ/master/Screenshots/android_youtube.png)](http://www.youtube.com/watch?v=TjwuddPEzN8)
+
 
 <h2>Before you start</h2>
 * These are iOS and Android native modules designed to work with Titanium SDK 3.1.1.GA
@@ -13,7 +14,7 @@ The TiSQ project allows you to use [Square's](http://square.github.io) open sour
 Download the platform you wish to use:
 
 * [iOS Dist](https://github.com/benbahrenburg/Ti.SQ/tree/master/iOS/dist)
-* Android Dist Coming soon...
+* [Android Dist] (https://github.com/benbahrenburg/Ti.SQ/tree/master/Android/dist)
 
 <h2>Building from source?</h2>
 
@@ -52,13 +53,19 @@ The selection value on the Ti.SQ calendar View
 
 The minimum date that will be shown and allowed to be selected on the Ti.SQ calendar view. 
 
+* On Android this is a creation time only property. You will always be able to read this value, but on Android you can only set property this on creation.
+
 <b>max</b> : Dictionary
 
 The maximum date that will be shown and allowed to be selected on the Ti.SQ calendar view. 
 
+* On Android this is a creation time only property. You will always be able to read this value, but on Android you can only set property this on creation.
+
 <b>PagingEnabled</b> : Boolean
 
 Enabled by default, this property determines if the Ti.SQ calendar view allows for scrolling
+
+* On Android this property will always be true.
 
 <b>BackgroundColor</b> : String/Color
 
