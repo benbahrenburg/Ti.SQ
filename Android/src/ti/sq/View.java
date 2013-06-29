@@ -19,6 +19,7 @@ public class View  extends TiUIView
 		private onClickListener clickListener = null;
 		public View(TiViewProxy proxy) 
 		{
+
 			super(proxy);
 
 			 Calendar start = Calendar.getInstance();
@@ -52,7 +53,7 @@ public class View  extends TiUIView
 
 			// Check if the color is specified when the view was created
 			if ((props.containsKey(PROPERTY_VALUE)) &&
-					(props.containsKey(PROPERTY_MIN)) &&
+					(props.containsKey(PROPERTY_MAX)) &&
 					(props.containsKey(PROPERTY_MIN))){	
 					
 				Date minValue  = convertHMtoDate(props.getKrollDict(PROPERTY_MIN));				
