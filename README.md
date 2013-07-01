@@ -2,7 +2,7 @@
 
 The TiSQ project allows you to use [Square's](http://square.github.io) open source TimeSquare calendar picker in your Titanium app.
 
-[![ScreenShot](https://raw.github.com/benbahrenburg/Ti.SQ/master/Screenshots/ios_youtube.png)](http://www.youtube.com/watch?v=HKy7pTjiRx8)[![ScreenShot](https://raw.github.com/benbahrenburg/Ti.SQ/master/Screenshots/android_youtube.png)](http://www.youtube.com/watch?v=TjwuddPEzN8)
+[![ScreenShot](https://raw.github.com/benbahrenburg/Ti.SQ/master/Screenshots/ios_youtube.png)](http://www.youtube.com/watch?v=HKy7pTjiRx8)	[![ScreenShot](https://raw.github.com/benbahrenburg/Ti.SQ/master/Screenshots/android_youtube.png)](http://www.youtube.com/watch?v=TjwuddPEzN8)
 
 
 <h2>Before you start</h2>
