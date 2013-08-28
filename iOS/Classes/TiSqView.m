@@ -17,6 +17,17 @@
 
 @implementation TiSqView
 
+-(BOOL)dateIsInRage:(NSDate*)date isBetweenDate:(NSDate*)beginDate andDate:(NSDate*)endDate
+{
+    if ([date compare:beginDate] == NSOrderedAscending)
+    	return NO;
+    
+    if ([date compare:endDate] == NSOrderedDescending)
+    	return NO;
+    
+    return YES;
+}
+
 -(TSQCalendarView*)square
 {
 	// Return the square view. If this is the first time then allocate and
@@ -88,10 +99,16 @@
         //Adjust size to match new container width
 		[TiUtils setView:square positionRect:bounds];
         
+        
         //If no date is setup, add today as the default
         if([[self square] selectedDate] == nil)
         {
-            [(TSQCalendarView *)self.square scrollToDate:[NSDate date] animated:NO];
+            if([self dateIsInRage:[NSDate date] isBetweenDate:[[self square] firstDate] andDate:[[self square] lastDate]]){
+                [(TSQCalendarView *)self.square scrollToDate:[NSDate date] animated:NO];
+            }else{
+                [(TSQCalendarView *)self.square scrollToDate:[[self square] firstDate] animated:NO];
+            }
+        
         }else{
             [(TSQCalendarView *)self.square scrollToDate:[[self square] selectedDate] animated:NO];
         }
@@ -145,9 +162,19 @@
     [comps setYear:year];
     
     NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
-    [[self square] setSelectedDate:[gregorian dateFromComponents:comps]];
+    NSDate *userProvidedDateValue = [gregorian dateFromComponents:comps];
     
-    [(TSQCalendarView *)self.square scrollToDate:[gregorian dateFromComponents:comps] animated:NO];
+    if(![self dateIsInRage:userProvidedDateValue
+             isBetweenDate:[[self square] firstDate] andDate:[[self square] lastDate]]){
+        NSLog(@"[DEBUG] Value is not within the min and max values provided. Using min value instead");
+        
+        [[self square] setSelectedDate:[[self square] firstDate]];
+        [(TSQCalendarView *)self.square scrollToDate:[[self square] firstDate] animated:NO];
+        
+    }else{
+        [[self square] setSelectedDate:userProvidedDateValue];        
+        [(TSQCalendarView *)self.square scrollToDate:userProvidedDateValue animated:NO];
+    }
     
 }
 

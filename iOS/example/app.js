@@ -11,13 +11,13 @@ var calendarView = sq.createView({
 	width:Ti.UI.FILL,
 	pagingEnabled:true,
 	value:{
-		month:4,day:15,year:2013
+		month:4,day:15,year:2014
 	},		
 	min:{
-		month:2,day:15,year:2013
+		month:1,day:15,year:2014
 	},
 	max:{
-		month:10,day:15,year:2013
+		month:10,day:15,year:2014
 	}
 });
 win.add(calendarView);		

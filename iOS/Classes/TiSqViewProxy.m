@@ -13,9 +13,9 @@
 -(NSArray *)keySequence
 {
     return [NSArray arrayWithObjects:
-            @"value",            
             @"min",
             @"max",
+            @"value",    
             @"pagingEnabled",
             nil];
 }
