@@ -149,6 +149,11 @@
 	[[self square] setPagingEnabled:[TiUtils boolValue:value]];
 }
 
+-(void) setSelectedDates_:(id)args
+{
+    selectedDates = args;
+}
+
 -(void)setValue_:(id)args
 {
     ENSURE_SINGLE_ARG(args,NSDictionary);
@@ -237,5 +242,33 @@
                                    ];
             [self.proxy fireEvent:@"dateChanged" withObject:event];
     }
+}
+
+
+- (BOOL)calendarView:(TSQCalendarView *)calendarView shouldDisplayEventMarkerForDate:(NSDate *)date
+{
+    NSLog(@"Given date: %@",date);
+    NSDateComponents *components = [calendarView.calendar components:NSMonthCalendarUnit|NSDayCalendarUnit fromDate:date];
+    for( NSDictionary* _date in selectedDates )
+    {
+        NSInteger month = [TiUtils intValue:@"month" properties:_date def:1];
+        NSInteger day   = [TiUtils intValue:@"day" properties:_date def:1];
+        NSInteger year  = [TiUtils intValue:@"year" properties:_date def:2000];
+        
+        NSDateComponents *comps = [[NSDateComponents alloc] init];
+        [comps setMonth:month];
+        [comps setDay:day];
+        [comps setYear:year];
+        
+        NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+        NSDate *userProvidedDateValue = [gregorian dateFromComponents:comps];
+        if(
+            [date isEqualToDate:userProvidedDateValue]
+        )
+        {
+            return YES;
+        }
+    }
+    return NO;
 }
 @end

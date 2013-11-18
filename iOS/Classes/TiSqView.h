@@ -9,6 +9,7 @@
 @interface TiSqView : TiUIView<TSQCalendarViewDelegate> {
 @private
 	TSQCalendarView *square;
+    NSArray *selectedDates;
 }
 -(void) render;
 @end
