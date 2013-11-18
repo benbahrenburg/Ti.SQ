@@ -101,7 +101,13 @@ var calendarView = square.createView({
 	},
 	max:{
 		month:10,day:15,year:2013
-	}
+	},
+	selectedDates: [
+		{month:2,day:17,year:2014},
+		{month:4,day:21,year:2014},
+		{month:4,day:26,year:2014},
+		{month:6,day:1,year:2014}
+	]
 });
 
 
