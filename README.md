@@ -67,6 +67,12 @@ Enabled by default, this property determines if the Ti.SQ calendar view allows f
 
 * On Android this property will always be true.
 
+<b>selectedDates</b> : Array
+
+Array containing Dictionaries with dates that should be marked as selected within the Ti.SQ calendar View.
+
+* On Android this property will be ignored.
+
 <b>BackgroundColor</b> : String/Color
 
 The color of the calendar view month headings
