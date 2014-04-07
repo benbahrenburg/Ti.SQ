@@ -15,4 +15,4 @@ name: TiSQ
 moduleid: ti.sq
 guid: 496bcf20-7426-452d-b76f-8ed999d90785
 platform: iphone
-minsdk: 3.1.1.GA
+minsdk: 3.2.2.GA
