@@ -2,7 +2,7 @@
 # this is your module manifest and used by Titanium
 # during compilation, packaging, distribution, etc.
 #
-version: 0.3
+version: 0.4
 apiversion: 3
 description: Ti.SQ is a Titanium wrapper for the TimeSquare date picker
 author: Benjamin Bahrenburg
