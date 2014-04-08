@@ -1,0 +1,3 @@
+[submodule "iOS/objc-TimesSquare"]
+	path = iOS/objc-TimesSquare
+	url = https://github.com/square/objc-TimesSquare.git
