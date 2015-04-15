@@ -2,7 +2,7 @@
 # this is your module manifest and used by Titanium
 # during compilation, packaging, distribution, etc.
 #
-version: 0.4
+version: 0.5
 apiversion: 3
 description: Ti.SQ is a Titanium wrapper for the TimeSquare date picker
 author: Benjamin Bahrenburg
@@ -14,5 +14,6 @@ copyright: copyright 2013 Benjamin Bahrenburg
 name: TiSQ
 moduleid: ti.sq
 guid: 496bcf20-7426-452d-b76f-8ed999d90785
+architectures: armv7 arm64 i386 x86_64
 platform: iphone
-minsdk: 3.2.2.GA
+minsdk: 3.5.0.GA
